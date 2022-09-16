@@ -85,9 +85,12 @@ function sortearCarta() {
     // EXIBINDO OS ATRIBUTOS NA TELA
     function exibirOpcoes() {
         var opcoes = document.getElementById("opcoes");
+        var opcoesTexto = ""
+
 
         for (var mostrarAtributos in cartaJogador.atributos) {
-            console.log(mostrarAtributos);
+            opcoesTexto += "<input type='radio' name='mostrarAtributos' value='" + mostrarAtributos + "'>" + mostrarAtributos
         }
+        opcoes.innerHTML = opcoesTexto;
     }
 
