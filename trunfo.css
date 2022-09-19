@@ -7,10 +7,12 @@ body {
     background-position: center top;
     background-repeat: no-repeat;
     padding-bottom: 20vh;
-    color: antiquewhite;
+    color: black;
     text-align: center;
 }
-
+h1, h2 {
+    color: antiquewhite;
+}
 .container {
     text-align: center;
     padding: 20px;
@@ -44,6 +46,7 @@ button, .button-jogar {
 #carta-jogador h3 {
     text-align: center;
 }
+
 
 .carta-imagem {
     border: 1px solid black;

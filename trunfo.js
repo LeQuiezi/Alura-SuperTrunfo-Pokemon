@@ -1,51 +1,46 @@
 var carta1 = {
     nome: "Bulbasauro",
+    imagem:"https://oanoe.com/wp-content/uploads/2021/09/198512341_184738870323344_495395960275737035_n.jpg",
     atributos: {
-        imagem:"https://oanoe.com/wp-content/uploads/2021/09/198512341_184738870323344_495395960275737035_n.jpg",
         Força: 10.000,
         Ataque: 7.000,
         Defesa: 9.000,
-        Agilidade: 50,
     }
 }
 var carta2 = {
     nome: "Pikachu",
+    imagem: "https://oanoe.com/wp-content/uploads/2021/09/241020280_257299426091496_7412507489213354806_n.jpg",
     atributos: {
-        Imagem: "https://oanoe.com/wp-content/uploads/2021/09/241020280_257299426091496_7412507489213354806_n.jpg",
         Força: 20.000,
         Ataque: 9.000,
         Defesa: 8.000,
-        Agilidade: 40,
     }
 }
 var carta3 = {
     nome: "Squirtle",
+    imagem: "https://cdnb.artstation.com/p/assets/images/images/035/000/691/large/gal-yosef-final.jpg?1613832843",
     atributos: {
-        Imagem: "https://i.pinimg.com/originals/d5/93/66/d59366f31e8bacf5103186ebfb4e581c.jpg",
         Força: 20.000,
         Ataque: 8.000,
         Defesa: 10.000,
-        Agilidade: 40,
     }
 }
 var carta4 = {
     nome: "Charmander",
+    imagem:"https://i.pinimg.com/originals/d5/93/66/d59366f31e8bacf5103186ebfb4e581c.jpg",
     atributos: {
-        imagem:"https://i.pinimg.com/originals/d5/93/66/d59366f31e8bacf5103186ebfb4e581c.jpg",
         Força: 25.000,
         Ataque: 5.000,
         Defesa: 7.000,
-        Agilidade: 35,
     }
 }
 var carta5 = {
     nome: "Mew",
+    imagem: "https://cdna.artstation.com/p/assets/images/images/039/525/296/20210713050302/smaller_square/gal-yosef-01.jpg?1626170582",
     atributos: {
-        Imagem: "https://compass-media.vogue.it/photos/612fc3100cfb5b1681ff1928/master/pass/Mew%20-%20Don't%20Ever%20Let%20It%20Go.jpg",
         Força: 50.000,
         Ataque: 7.000,
         Defesa: 5.000,
-        Agilidade: 15,
     }
 }
 
@@ -79,18 +74,77 @@ function sortearCarta() {
     document.getElementById("btnJogar").disabled = false;
 
     //PARA EXIBIR AS OPÇÕES NO CONSOLE
-    exibirOpcoes();
+   
+    exibirCartaJogador();
 }
+     
 
-    // EXIBINDO OS ATRIBUTOS NA TELA
-    function exibirOpcoes() {
-        var opcoes = document.getElementById("opcoes");
-        var opcoesTexto = ""
+    //SELECIONAR O ATRIBUTO
+    function obtemAtributoSelecionado() {
+        var radioAtributoSelecionado = document.getElementsByName("mostrarAtributos");
 
-
-        for (var mostrarAtributos in cartaJogador.atributos) {
-            opcoesTexto += "<input type='radio' name='mostrarAtributos' value='" + mostrarAtributos + "'>" + mostrarAtributos
+        for (var i = 0; i < radioAtributoSelecionado.length; i++) {
+            if (radioAtributoSelecionado[i].checked == true) {
+                return radioAtributoSelecionado[i].value;
+            }
         }
-        opcoes.innerHTML = opcoesTexto;
     }
 
+    //ESSA FUNÇÃO É O QUE VAI COMPARAR PARA TER O JOGO.
+    function jogar() {
+        var atributoSelecionado = obtemAtributoSelecionado();
+        var divResultado = document.getElementById("resultado");
+
+        if (cartaJogador.atributos[atributoSelecionado] > cartaMaquina.atributos[atributoSelecionado]) 
+        { 
+            htmlResultado = "<p class='resultado-final'>Venceu!</p>"
+        } 
+        else if (cartaJogador.atributos[atributoSelecionado] < cartaMaquina.atributos[atributoSelecionado]) 
+        { 
+            htmlResultado = "<p class='resultado-final'>Perdeu</p>"
+        } 
+        else 
+        {
+            htmlResultado = "<p class='resultado-final'>Empatou</p>"
+        } 
+        divResultado.innerHTML = htmlResultado;
+
+        document.getElementById("btnJogar").disabled = true;
+
+        exibirCartaMaquina();
+    }
+    //EXIBINDO AS CARTAS DO JOGADOR
+    function exibirCartaJogador() {
+    var divCartaJogador = document.getElementById("carta-jogador");
+    divCartaJogador.style.backgroundImage = `url(${cartaJogador.imagem})`;
+    // ou divCartaJogador.style.backgroundImage = "$url(" + cartaJogador.imagem + ")"
+    var moldura = '<img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/card-super-trunfo-transparent-ajustado.png"style=" width: inherit; height: inherit; position: absolute;">';
+    var tagHTML = "<div id='opcoes' class='carta-status'>";
+
+    var opcoesTexto = "";
+    // EXIBINDO OS ATRIBUTOS NA TELA
+    for (var mostrarAtributos in cartaJogador.atributos) {
+        opcoesTexto += "<input type='radio' name='mostrarAtributos' value='" + mostrarAtributos + "'>" + mostrarAtributos + " " + cartaJogador.atributos[mostrarAtributos] + "<br>";
+    }
+    var nome = `<p class="carta-subtitle">${cartaJogador.nome}</p>`
+
+    divCartaJogador.innerHTML = moldura + nome + tagHTML + opcoesTexto + "</div>"
+}  
+
+//EXIBINDO CARTA MÁQUINA
+    function exibirCartaMaquina() {
+        var divCartaMaquina = document.getElementById("carta-maquina");
+    divCartaMaquina.style.backgroundImage = `url(${cartaMaquina.imagem})`;
+    var moldura = '<img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/card-super-trunfo-transparent-ajustado.png"style=" width: inherit; height: inherit; position: absolute;">';
+    var tagHTML = "<div id='opcoes' class='carta-status'>";
+
+    var opcoesTexto = "";
+    for (var mostrarAtributos in cartaMaquina.atributos) {
+        opcoesTexto += "<p type='text' name='mostrarAtributos' value='" + mostrarAtributos + "'>" + mostrarAtributos + " " + cartaMaquina.atributos[mostrarAtributos] + "</p>";
+    }
+    var nome = `<p class="carta-subtitle">${cartaMaquina.nome}</p>`
+
+    divCartaMaquina.innerHTML = moldura + nome + tagHTML + opcoesTexto + "</div>"
+    }
+        
+ 
